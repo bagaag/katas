@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 namespace Katas
 {
     // validate a string for correct groupings of (), {} and [], such that {[()]} = true, {[(])} = false
+    [TestFixture]
     public class ValidateGroups
     {
         char[] openers = new char[] { '[', '(', '{' };
@@ -41,5 +43,20 @@ namespace Katas
             if (stack.Count > 0) return false;
             else return true;
         }
+
+        [TestCase()]
+        public void ValidateGroupsTest()
+        {
+            ValidateGroups vg = new ValidateGroups();
+            Assert.IsTrue(vg.IsValid(""));
+            Assert.IsTrue(vg.IsValid("{[()]}"));
+            Assert.IsTrue(vg.IsValid("{[([])([[]])]}"));
+            Assert.IsFalse(vg.IsValid("]"));
+            Assert.IsFalse(vg.IsValid("{[(])}"));
+            Assert.IsFalse(vg.IsValid("{()]}"));
+            Assert.IsFalse(vg.IsValid("{()"));
+        }
     }
 }
+
+
